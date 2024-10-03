@@ -38,7 +38,25 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+   
+        let decodedMessage = '';
+    
+        // Разделяем строку на группы по 10 символов
+        for (let i = 0; i < expr.length; i += 10) {
+            const morseCodeSegment = expr.slice(i, i + 10);  // Получаем подстроку длиной 10
+    
+            if (morseCodeSegment === '**********') {
+                decodedMessage += ' '; // Обрабатываем пробелы 
+            } else {
+                // Декодируем символ: заменяем 10 на точку и 11 на тире
+                const morseChar = morseCodeSegment.replace(/10/g, '.').replace(/11/g, '-').replace(/0/g, ''); // убираем лишние нули
+                // Получаем символ из таблицы
+                decodedMessage += MORSE_TABLE[morseChar] || ''; // Если символ не найден, добавляем пустую строку
+            }
+        }
+    
+        return decodedMessage;
+    
 }
 
 module.exports = {
